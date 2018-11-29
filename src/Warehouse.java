@@ -30,7 +30,7 @@ public class Warehouse {
     	//2) Show menu and handle user inputs
         Scanner scan = new Scanner(System.in);
         int menu = 0;
-        
+
         while (true) {
             while (true) {
                 System.out.println("==========Options==========\n" +

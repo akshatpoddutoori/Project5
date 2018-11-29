@@ -80,7 +80,6 @@ public class Truck extends Vehicle {
         }
 
         return output;
-
     }
 
 

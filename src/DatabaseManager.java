@@ -23,6 +23,7 @@ public class DatabaseManager {
      */
     public static ArrayList<Vehicle> loadVehicles(File file) {
        //TODO
+        return null;
     }
 
     
@@ -51,6 +52,7 @@ public class DatabaseManager {
      */
     public static ArrayList<Package> loadPackages(File file) {
     	//TODO
+        return null;
     }
     
     
@@ -67,6 +69,7 @@ public class DatabaseManager {
      */
     public static double loadProfit(File file) {
     	//TODO
+        return 0;
     }
 
     
@@ -82,6 +85,7 @@ public class DatabaseManager {
      */
     public static int loadPackagesShipped(File file) {
     	//TODO
+        return 0;
     }
 
     
@@ -96,6 +100,7 @@ public class DatabaseManager {
      */
     public static boolean loadPrimeDay(File file) {
     	//TODO
+        return false;
     }
 
     
