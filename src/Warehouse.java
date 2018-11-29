@@ -1,4 +1,5 @@
 import java.io.File;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 /**
@@ -29,6 +30,7 @@ public class Warehouse {
     	//2) Show menu and handle user inputs
         Scanner scan = new Scanner(System.in);
         int menu = 0;
+        
         while (true) {
             while (true) {
                 System.out.println("==========Options==========\n" +
@@ -53,21 +55,67 @@ public class Warehouse {
                 }
             }
             if (menu == 1) {
+                System.out.println("Enter Package ID:");
+                String id = scan.next();
 
-            }
-            if (menu == 2) {
+                System.out.println("Enter Product Name:");
+                String product = scan.next();
 
-            }
-            if (menu == 3) {
+                System.out.println("Enter Weight:");
+                double weight = scan.nextDouble();
+                scan.nextLine();
 
-            }
-            if (menu == 4) {
+                System.out.println("Enter Price:");
+                double price = scan.nextDouble();
+                scan.nextLine();
 
-            }
-            if (menu == 5) {
+                System.out.println("Enter Buyer Name:");
+                String name = scan.next();
 
-            }
-            if (menu == 6) {
+                System.out.println("Enter Address:");
+                String address = scan.next();
+
+                System.out.println("Enter City:");
+                String city = scan.next();
+
+                System.out.println("Enter State:");
+                String state = scan.next();
+
+                System.out.println("Enter ZIP Code:");
+                int zipCode = scan.nextInt();
+
+                ShippingAddress shippingAddress = new ShippingAddress(name, address, city, state, zipCode);
+                Package packageToBeAdded = new Package(id, product, weight, price, shippingAddress);
+
+                System.out.println(packageToBeAdded.shippingLabel());
+            } else if (menu == 2) {
+                System.out.println("Vehicle Options:\n" +
+                        "1) Truck\n" +
+                        "2) Drone\n" +
+                        "3) Cargo Plane");
+                while(true) {
+                    int vehicleOption = scan.nextInt();
+                    if (vehicleOption == 1) {
+
+                        break;
+                    } else if (vehicleOption == 2) {
+
+                        break;
+                    } else if (vehicleOption == 3) {
+
+                        break;
+                    } else {
+                        System.out.println("Error: Option not available.");
+                        continue;
+                    }
+                }
+            } else if (menu == 3) {
+
+            } else if (menu == 4) {
+
+            } else if (menu == 5) {
+
+            } else if (menu == 6) {
                 break;
             }
         }

@@ -12,8 +12,10 @@ public class Truck extends Vehicle {
      * Default Constructor
      */
     //============================================================================
-    //TODO
-    
+    public Truck() {
+        super();
+    }
+
     //============================================================================
 
     /**
@@ -23,7 +25,9 @@ public class Truck extends Vehicle {
      * @param maxWeight    maximum weight that the vehicle can hold
      */
     //============================================================================
-    //TODO
+    public Truck(String licensePlate, double maxWeight) {
+        super(licensePlate, maxWeight);
+    }
     
     //============================================================================
 
@@ -40,8 +44,14 @@ public class Truck extends Vehicle {
      */
     @Override
     public double getProfit() {
-        //TODO
-    	
+        double income = 0;
+        for (Package currentItem: getPackages()) {
+            income += currentItem.getPrice();
+        }
+
+        double costs = GAS_RATE * getDistanceTraveled();
+
+        return (income - costs);
     }
 
     /**
@@ -58,8 +68,19 @@ public class Truck extends Vehicle {
      */
     @Override
     public String report() {
-        //TODO
-    	
+        String output = "==========Truck Report==========\n" +
+                "License Plate No.: " + getLicensePlate() + "\n" +
+                "Destination: " + getZipDest() + "\n" +
+                "Weight Load: " + getCurrentWeight() + "/" + getMaxWeight() + "\n" +
+                "Net Profit: $" + getProfit() + "\n" +
+                "=====Shipping Labels=====\n";
+
+        for (Package currentItem: getPackages()) {
+            output += currentItem.shippingLabel();
+        }
+
+        return output;
+
     }
 
 

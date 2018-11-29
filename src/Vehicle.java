@@ -204,4 +204,16 @@ public class Vehicle implements Profitable {
         return null;
         //does not have to be implemented here because it just has to be done in subclasses
     }
+
+
+    public int getDistanceTraveled() {
+        int difference = 0;
+        for (Package currentItem : packages) {
+            if (Math.abs(currentItem.getDestination().getZipCode() - zipDest) > difference) {
+                difference = Math.abs(currentItem.getDestination().getZipCode() - zipDest);
+            }
+        }
+        return difference;
+    }
+
 }

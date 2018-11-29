@@ -11,7 +11,9 @@ public class CargoPlane extends Vehicle {
      * Default Constructor
      */
     //============================================================================
-    //TODO
+    public CargoPlane() {
+        super();
+    }
     
     //============================================================================
 
@@ -22,7 +24,9 @@ public class CargoPlane extends Vehicle {
      * @param maxWeight    maximum weight that the vehicle can hold
      */
     //============================================================================
-    //TODO
+    public CargoPlane(String licensePlate, double maxWeight) {
+        super(licensePlate, maxWeight);
+    }
     
     //============================================================================
 
@@ -34,8 +38,19 @@ public class CargoPlane extends Vehicle {
      */
     @Override
     public void fill(ArrayList<Package> warehousePackages) {
-    	//TODO
-        
+        int difference = 0;
+        int counter = 0;
+
+        while (counter < warehousePackages.size()) {
+            for (Package currentItem : warehousePackages) {
+                if (Math.abs(currentItem.getDestination().getZipCode() - getZipDest()) < difference &&
+                        Math.abs(currentItem.getDestination().getZipCode() - getZipDest()) > (difference - 10)) {
+                    addPackage(currentItem);
+                    counter++;  //iterates so that you know each item in the list has been checked
+                }
+            }
+            difference += 10;   //iterates so that the difference in zip codes increments by 10
+        }
     }
 
     /*
@@ -52,8 +67,14 @@ public class CargoPlane extends Vehicle {
      */
     @Override
     public double getProfit() {
-    	//TODO
-        
+        double income = 0;
+        for (Package currentItem: getPackages()) {
+            income += currentItem.getPrice();
+        }
+
+        double costs = GAS_RATE * getDistanceTraveled();
+
+        return (income - costs);
     }
 
     /**
@@ -70,8 +91,18 @@ public class CargoPlane extends Vehicle {
      */
     @Override
     public String report() {
-    	//TODO
-       
+        String output = "==========Cargo Plane Report==========\n" +
+                "License Plate No.: " + getLicensePlate() + "\n" +
+                "Destination: " + getZipDest() + "\n" +
+                "Weight Load: " + getCurrentWeight() + "/" + getMaxWeight() + "\n" +
+                "Net Profit: $" + getProfit() + "\n" +
+                "=====Shipping Labels=====\n";
+
+        for (Package currentItem: getPackages()) {
+            output += currentItem.shippingLabel();
+        }
+
+        return output;
     }
 
    

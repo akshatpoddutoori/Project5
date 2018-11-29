@@ -2,7 +2,7 @@
  * <h1>Shipping Address</h1> Represents a shipping address
  */
 public class ShippingAddress {
-	//TODO
+
     private String name;
     private String address;
     private String city;
@@ -69,4 +69,11 @@ public class ShippingAddress {
     public void setZipCode(int zipCode) {
         this.zipCode = zipCode;
     }
+
+    public String toString() {
+        return name + "\n" +
+                address + "\n" +
+                city + ", " + state + ", " + zipCode;
+    }
+
 }
