@@ -76,4 +76,9 @@ public class ShippingAddress {
                 city + ", " + state + ", " + zipCode;
     }
 
+    //method that is used in DatabaseManager in the savePackages() method
+    public String betterToString() {
+        return name + "," + address + "," + city + "," + state + "," + zipCode;
+    }
+
 }

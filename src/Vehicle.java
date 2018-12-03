@@ -216,4 +216,8 @@ public class Vehicle implements Profitable {
         return difference;
     }
 
+    public String getType() {
+        return "type";
+    }
+
 }

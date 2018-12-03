@@ -82,6 +82,9 @@ public class Truck extends Vehicle {
         return output;
     }
 
-
+    //method that is used in DatabaseManager in the saveVehicles() method
+    public String getType() {
+        return "Truck";
+    }
 
 }
