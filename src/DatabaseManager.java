@@ -8,6 +8,10 @@ import java.util.ArrayList;
  */
 public class DatabaseManager {
 
+    public DatabaseManager() {
+
+    }
+
     /**
      * Creates an ArrayList of Vehicles from the passed CSV file. The values are in
      * the CSV file as followed:
@@ -110,6 +114,7 @@ public class DatabaseManager {
 
                 output.add(new Package(licensePlate, productName, weight, price,
                         new ShippingAddress(addressName, address, city, state, zipCode)));
+                br.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -233,7 +238,7 @@ public class DatabaseManager {
     public static void saveVehicles(File file, ArrayList<Vehicle> vehicles) {
 
         try (
-                BufferedWriter bw = new BufferedWriter(new FileWriter(file))
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))
         ) {
             for (Vehicle vehicle: vehicles) {
                 bw.write(vehicle.getType() + "," + vehicle.getLicensePlate() + "," +
@@ -270,7 +275,7 @@ public class DatabaseManager {
      */
     public static void savePackages(File file, ArrayList<Package> packages) {
         try (
-                BufferedWriter bw = new BufferedWriter(new FileWriter(file))
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))
         ) {
             for (Package currentPackage: packages) {
                 bw.write(currentPackage.getID() + "," + currentPackage.getProduct() + "," +
