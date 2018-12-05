@@ -8,10 +8,6 @@ import java.util.ArrayList;
  */
 public class DatabaseManager {
 
-    public DatabaseManager() {
-
-    }
-
     /**
      * Creates an ArrayList of Vehicles from the passed CSV file. The values are in
      * the CSV file as followed:
@@ -26,12 +22,11 @@ public class DatabaseManager {
      * @return ArrayList of vehicles
      */
     public static ArrayList<Vehicle> loadVehicles(File file) {
+        ArrayList<Vehicle> output = new ArrayList<>();
 
-        ArrayList<Vehicle> output = new ArrayList<Vehicle>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
 
-        try (
-                BufferedReader br = new BufferedReader(new FileReader(file))
-        ) {
             for (String line; (line = br.readLine()) != null; ) {
 
                 String vehicleType = line.substring(0, line.indexOf(","));
@@ -45,9 +40,8 @@ public class DatabaseManager {
                 } else if (vehicleType.equals("Cargo Plane")) {
                     output.add(new CargoPlane(licensePlate, maxWeight));
                 }
-                br.close();
             }
-
+            br.close();
         } catch (IOException e) {
             System.out.println("KOWALSKI, ANALYSIS");
             e.printStackTrace();
@@ -85,46 +79,48 @@ public class DatabaseManager {
     //123ABC,Echo Dot,5.7,49.99,Lawson Computer Science Building,305 N University St,West Lafayette,IN,47907
     public static ArrayList<Package> loadPackages(File file) {
 
-        ArrayList<Package> output = new ArrayList<Package>();
+        ArrayList<Package> output = new ArrayList<>();
 
-        try (
-                BufferedReader br = new BufferedReader(new FileReader(file))
-        ) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
             for (String line; (line = br.readLine()) != null; ) {
 
-                int comma1 = line.indexOf(",");
-                int comma2 = (line.substring(comma1 + 1)).indexOf(",");
-                int comma3 = (line.substring(comma2 + 1)).indexOf(",");
-                int comma4 = (line.substring(comma3 + 1)).indexOf(",");
-                int comma5 = (line.substring(comma4 + 1)).indexOf(",");
-                int comma6 = (line.substring(comma5 + 1)).indexOf(",");
-                int comma7 = (line.substring(comma6 + 1)).indexOf(",");
-                int comma8 = (line.substring(comma7 + 1)).indexOf(",");
-                int comma9 = (line.substring(comma8 + 1)).indexOf(",");
+                int c1 = line.indexOf(',');
+                int c2 = line.indexOf(',', c1 + 1);
+                int c3 = line.indexOf(',', c2 + 1);
+                int c4 = line.indexOf(',', c3 + 1);
+                int c5 = line.indexOf(',', c4 + 1);
+                int c6 = line.indexOf(',', c5 + 1);
+                int c7 = line.indexOf(',', c6 + 1);
+                int c8 = line.indexOf(',', c7 + 1);
 
-                String licensePlate = line.substring(0, comma1);
-                String productName = line.substring(comma1, comma2);
-                double weight = Double.parseDouble(line.substring(comma2, comma3));
-                double price = Double.parseDouble(line.substring(comma3, comma4));
-                String addressName = line.substring(comma4, comma5);
-                String address = line.substring(comma5, comma6);
-                String city = line.substring(comma6, comma7);
-                String state = line.substring(comma7, comma8);
-                int zipCode = Integer.parseInt(line.substring(comma8, comma9));
+                String licensePlate = line.substring(0, c1);
+                String productName = line.substring(c1 + 1, c2);
+                double weight = Double.parseDouble(line.substring(c2 + 1, c3));
+                double price = Double.parseDouble(line.substring(c3 + 1, c4));
+                String addressName = line.substring(c4 + 1, c5);
+                String address = line.substring(c5 + 1, c6);
+                String city = line.substring(c6 + 1, c7);
+                String state = line.substring(c7 + 1, c8);
+                int zipCode = Integer.parseInt(line.substring(c8 + 1));
 
                 output.add(new Package(licensePlate, productName, weight, price,
                         new ShippingAddress(addressName, address, city, state, zipCode)));
-                br.close();
             }
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return output;
     }
+    
+    
+    
+    
+    
 
-
-        /**
+    /**
      * Returns the total Profits from passed text file. If the file does not exist 0
      * will be returned.
      * 
@@ -132,20 +128,16 @@ public class DatabaseManager {
      * @return profits from file
      */
     public static double loadProfit(File file) {
-
-        if (file.exists() == false) {
+        if (!file.exists()) {
             return 0.0;
         }
 
         double output = 0.0;
 
-        try (
-                BufferedReader br = new BufferedReader(new FileReader(file))
-        ) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
             for (String line; (line = br.readLine()) != null; ) {
-                if(line != null) {
-                    output = Double.parseDouble(line);
-                }
+                output = Double.parseDouble(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -166,20 +158,16 @@ public class DatabaseManager {
      * @return number of packages shipped from file
      */
     public static int loadPackagesShipped(File file) {
-
-        if (file.exists() == false) {
+        if (!file.exists()) {
             return 0;
         }
 
         int output = 0;
 
-        try (
-                BufferedReader br = new BufferedReader(new FileReader(file))
-        ) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
             for (String line; (line = br.readLine()) != null; ) {
-                if(line != null) {
-                    output = Integer.parseInt(line);
-                }
+                output = Integer.parseInt(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -189,7 +177,7 @@ public class DatabaseManager {
     }
 
     
-
+    
     
     /**
      * Returns whether or not it was Prime Day in the previous session. If file does
@@ -199,16 +187,14 @@ public class DatabaseManager {
      * @return whether or not it is prime day
      */
     public static boolean loadPrimeDay(File file) {
-
-        if (file.exists() == false) {
+        if (!file.exists()) {
             return false;
         }
 
         int counter = 0;
 
-        try (
-                BufferedReader br = new BufferedReader(new FileReader(file))
-        ) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
             for (String line; (line = br.readLine()) != null; ) {
                 counter += Integer.parseInt(line);
             }
@@ -236,10 +222,8 @@ public class DatabaseManager {
      * @param vehicles ArrayList of vehicles to save to file
      */
     public static void saveVehicles(File file, ArrayList<Vehicle> vehicles) {
-
-        try (
-                BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))
-        ) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
             for (Vehicle vehicle: vehicles) {
                 bw.write(vehicle.getType() + "," + vehicle.getLicensePlate() + "," +
                         vehicle.getMaxWeight());
@@ -249,7 +233,6 @@ public class DatabaseManager {
                     + "I get more information on what caused this exception:");
             e.printStackTrace();
         }
-
     }
 
     
@@ -274,9 +257,8 @@ public class DatabaseManager {
      * @param packages ArrayList of packages to save to file
      */
     public static void savePackages(File file, ArrayList<Package> packages) {
-        try (
-                BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))
-        ) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
             for (Package currentPackage: packages) {
                 bw.write(currentPackage.getID() + "," + currentPackage.getProduct() + "," +
                         currentPackage.getWeight() + "," + currentPackage.getPrice() + "," +
@@ -300,9 +282,8 @@ public class DatabaseManager {
      */
 
     public static void saveProfit(File file, double profit) {
-        try (
-                BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))
-        ) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
             bw.write("" + profit);
         } catch (IOException e) {
             System.out.println("An IOException occurred. I will now print the stack trace so "
@@ -323,9 +304,8 @@ public class DatabaseManager {
      */
 
     public static void savePackagesShipped(File file, int nPackages) {
-        try (
-                BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))
-        ) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
             bw.write("" + nPackages);
         } catch (IOException e) {
             System.out.println("An IOException occurred. I will now print the stack trace so "
@@ -348,12 +328,11 @@ public class DatabaseManager {
      */
 
     public static void savePrimeDay(File file, boolean primeDay) {
-        try (
-                BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))
-        ) {
-            if (primeDay == true) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+            if (primeDay) {
                 bw.write("1");
-            } else if (primeDay == false) {
+            } else {
                 bw.write("0");
             }
         } catch (IOException e) {

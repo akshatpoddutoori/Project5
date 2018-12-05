@@ -1,6 +1,4 @@
-import javax.xml.crypto.Data;
 import java.io.File;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,9 +7,11 @@ import java.util.Scanner;
  */
 
 public class Warehouse {
-	final static String folderPath = "Desktop/JAVA/Project5/src/files/";
-    final static File VEHICLE_FILE = new File(folderPath + "VehicleList.csv");
-    final static File PACKAGE_FILE = new File(folderPath + "PackageList.csv");
+	final static String folderPath = "files/";
+//    final static File VEHICLE_FILE = new File(folderPath + "VehicleList.csv");
+    final static File VEHICLE_FILE = new File("/Users/Linnea/Desktop/untitled/src/files/VehicleList.csv");
+    //    final static File PACKAGE_FILE = new File(folderPath + "PackageList.csv");
+    final static File PACKAGE_FILE = new File("/Users/Linnea/Desktop/untitled/src/files/PackageList.csv");
     final static File PROFIT_FILE = new File(folderPath + "Profit.txt");
     final static File N_PACKAGES_FILE = new File(folderPath + "NumberOfPackages.txt");
     final static File PRIME_DAY_FILE = new File(folderPath + "PrimeDay.txt");
@@ -31,9 +31,9 @@ public class Warehouse {
         double profit = DatabaseManager.loadProfit(PROFIT_FILE);
         int numPackages = DatabaseManager.loadPackagesShipped(N_PACKAGES_FILE);
         boolean primeDay = DatabaseManager.loadPrimeDay(PRIME_DAY_FILE);
-
-
-        //2) Show menu and handle user inputs
+    	
+    	
+    	//2) Show menu and handle user inputs
         Scanner scan = new Scanner(System.in);
         int menu = 0;
 
@@ -144,7 +144,7 @@ public class Warehouse {
                 for (Package currentPackage: packages) {
                     currentPackage.setPrice((currentPackage.getPrice() * 0.85));
                 }
-                if (primeDay == true) {
+                if (primeDay) {
                     primeDay = false;
                 } else {
                     primeDay = true;
@@ -152,18 +152,17 @@ public class Warehouse {
 
             } else if (menu == 4) {
 
-            } else if (menu == 5) {
+            } else if (menu == 5) { //TODO won't always lineup properly
                 System.out.println("==========Statistics==========\n" +
                         "Profits:                 $" + DatabaseManager.loadProfit(PROFIT_FILE   ) + "\n" +
-                        "Packages Shipped:                " + DatabaseManager.loadPackagesShipped(N_PACKAGES_FILE)
-                        + "\n" + "Packages in Warehouse:           "
+                        "Packages Shipped:           " + DatabaseManager.loadPackagesShipped(N_PACKAGES_FILE)
+                        + "\n" + "Packages in Warehouse:      "
                         + (DatabaseManager.loadPackages(PACKAGE_FILE)).size() + "\n" +
                         "==============================");
             } else if (menu == 6) {
                 break;
             }
         }
-
     	
     	
     	//3) save data (vehicle, packages, profits, packages shipped and primeday) to files (overwriting them) using DatabaseManager

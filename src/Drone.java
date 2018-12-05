@@ -27,8 +27,7 @@ public class Drone extends Vehicle {
     public Drone(String licensePlate, double maxWeight) {
         super(licensePlate, maxWeight);
     }
-
-
+    
     //============================================================================
 
     /*
@@ -51,7 +50,7 @@ public class Drone extends Vehicle {
 
         double costs = GAS_RATE * getDistanceTraveled();
 
-        return (income - costs);
+        return income - costs;
     }
 
     /**
@@ -81,7 +80,6 @@ public class Drone extends Vehicle {
 
         return output;
     }
-
 
     //method that is used in DatabaseManager in the saveVehicles() method
     public String getType() {

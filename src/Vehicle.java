@@ -21,9 +21,8 @@ public class Vehicle implements Profitable {
         this.maxWeight = 0;
         this.currentWeight = 0;
         this.zipDest = 0;
-        this.packages = new ArrayList<Package>();
+        this.packages = new ArrayList<>();
     }
-    
     //============================================================================
 
 
@@ -39,9 +38,8 @@ public class Vehicle implements Profitable {
         this.maxWeight = maxWeight;
         this.currentWeight = 0;
         this.zipDest = 0;
-        this.packages = new ArrayList<Package>();
+        this.packages = new ArrayList<>();
     }
-    
     //============================================================================
 
     
@@ -54,7 +52,10 @@ public class Vehicle implements Profitable {
         return licensePlate;
     }
 
-
+    
+    
+    
+    
     /**
      * Updates the license plate of vehicle
      * 
@@ -63,7 +64,12 @@ public class Vehicle implements Profitable {
     public void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate;
     }
-
+    
+    
+    
+    
+    
+    
 
     /**
      * Returns the maximum weight this vehicle can carry
@@ -74,7 +80,10 @@ public class Vehicle implements Profitable {
         return maxWeight;
     }
 
-
+    
+    
+    
+    
     /**
      * Updates the maximum weight of this vehicle
      * 
@@ -84,7 +93,11 @@ public class Vehicle implements Profitable {
         this.maxWeight = maxWeight;
     }
 
-
+    
+    
+    
+    
+    
     /**
      * Returns the current weight of all packages inside vehicle
      * 
@@ -93,7 +106,11 @@ public class Vehicle implements Profitable {
     public double getCurrentWeight() {
         return currentWeight;
     }
-
+    
+    
+    
+    
+    
 
     /**
      * Returns the current ZIP code desitnation of the vehicle
@@ -103,6 +120,10 @@ public class Vehicle implements Profitable {
     public int getZipDest() {
         return zipDest;
     }
+    
+    
+    
+    
     
 
     /**
@@ -114,7 +135,11 @@ public class Vehicle implements Profitable {
         this.zipDest = zipDest;
     }
 
-
+    
+    
+    
+    
+    
     /**
      * Returns ArrayList of packages currently in Vehicle
      * 
@@ -124,7 +149,11 @@ public class Vehicle implements Profitable {
         return packages;
     }
 
-
+    
+    
+    
+    
+    
     /**
      * Adds Package to the vehicle only if has room to carry it (adding it would not
      * cause it to go over its maximum carry weight).
@@ -133,14 +162,14 @@ public class Vehicle implements Profitable {
      * @return whether or not it was successful in adding the package
      */
     public boolean addPackage(Package pkg) {
-        if ((currentWeight + pkg.getWeight()) < maxWeight) {
-            return packages.add(pkg);
-        } else {
-            return false;
-        }
+        return ((currentWeight + pkg.getWeight()) < maxWeight) && packages.add(pkg);
     }
 
-
+    
+    
+    
+    
+    
     /**
      * Clears vehicle of packages and resets its weight to zero
      */
@@ -148,6 +177,10 @@ public class Vehicle implements Profitable {
         packages.clear();
         currentWeight = 0;
     }
+    
+    
+    
+    
     
 
     /**
@@ -157,10 +190,14 @@ public class Vehicle implements Profitable {
      * @return whether or not Vehicle is full
      */
     public boolean isFull() {
-        return (currentWeight == maxWeight);
+        return currentWeight == maxWeight;
     }
 
-
+    
+    
+    
+    
+    
     /**
      * Fills vehicle with packages with preference of date added and range of its
      * destination zip code. It will iterate over the packages intially at a range
@@ -186,7 +223,6 @@ public class Vehicle implements Profitable {
         }
     }
 
-
     @Override
     public double getProfit() {
         double income = 0;
@@ -198,6 +234,7 @@ public class Vehicle implements Profitable {
 
         return (income - costs);
     }
+
 
     @Override
     public String report() {
@@ -219,5 +256,7 @@ public class Vehicle implements Profitable {
     public String getType() {
         return "type";
     }
+
+
 
 }

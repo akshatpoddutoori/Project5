@@ -20,7 +20,7 @@ public class Truck extends Vehicle {
 
     /**
      * Constructor
-     * 
+     *
      * @param licensePlate license plate of vehicle
      * @param maxWeight    maximum weight that the vehicle can hold
      */
@@ -28,7 +28,7 @@ public class Truck extends Vehicle {
     public Truck(String licensePlate, double maxWeight) {
         super(licensePlate, maxWeight);
     }
-    
+
     //============================================================================
 
     /*
@@ -63,7 +63,7 @@ public class Truck extends Vehicle {
      * <li>Net Profit</li>
      * <li>Shipping labels of all packages in truck</li>
      * </ul>
-     * 
+     *
      * @return Truck Report
      */
     @Override
