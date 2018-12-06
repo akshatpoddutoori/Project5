@@ -227,7 +227,7 @@ public class DatabaseManager {
             StringBuilder sb = new StringBuilder();
             for (Vehicle vehicle: vehicles) {
                 sb.append(vehicle.getType() + "," + vehicle.getLicensePlate() + "," +
-                        vehicle.getMaxWeight());
+                        vehicle.getMaxWeight() + "\n");
             }
             bw.write(sb.toString());
             bw.close();

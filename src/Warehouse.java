@@ -9,15 +9,15 @@ import java.util.Scanner;
 public class Warehouse {
 	final static String folderPath = "files/";
 //    final static File VEHICLE_FILE = new File(folderPath + "VehicleList.csv");
-    final static File VEHICLE_FILE = new File("/Users/Linnea/Desktop/Project5/src/files/VehicleList.csv");
+    final static File VEHICLE_FILE = new File("/Users/Akshat/Desktop/JAVA/Project5/src/files/VehicleList.csv");
 //    final static File PACKAGE_FILE = new File(folderPath + "PackageList.csv");
-    final static File PACKAGE_FILE = new File("/Users/Linnea/Desktop/Project5/src/files/PackageList.csv");
+    final static File PACKAGE_FILE = new File("/Users/Akshat/Desktop/JAVA/Project5/src/files/PackageList.csv");
 //    final static File PROFIT_FILE = new File(folderPath + "Profit.txt");
-    final static File PROFIT_FILE = new File("/Users/Linnea/Desktop/Project5/src/files/Profit.txt");
+    final static File PROFIT_FILE = new File("/Users/Akshat/Desktop/JAVA/Project5/src/files/Profit.txt");
 //    final static File N_PACKAGES_FILE = new File(folderPath + "NumberOfPackages.txt");
-    final static File N_PACKAGES_FILE = new File("/Users/Linnea/Desktop/Project5/src/files/NumberOfPackages.txt");
+    final static File N_PACKAGES_FILE = new File("/Users/Akshat/Desktop/JAVA/Project5/src/files/NumberOfPackages.txt");
 //    final static File PRIME_DAY_FILE = new File(folderPath + "PrimeDay.txt");
-    final static File PRIME_DAY_FILE = new File("/Users/Linnea/Desktop/Project5/src/files/PrimeDay.txt");
+    final static File PRIME_DAY_FILE = new File("/Users/Akshat/Desktop/JAVA/Project5/src/files/PrimeDay.txt");
 
     final static double PRIME_DAY_DISCOUNT = .15;
 
@@ -36,18 +36,24 @@ public class Warehouse {
         int numPackages = DatabaseManager.loadPackagesShipped(N_PACKAGES_FILE);
         boolean primeDay = DatabaseManager.loadPrimeDay(PRIME_DAY_FILE);
 
-
-    	
     	//2) Show menu and handle user inputs
         Scanner scan = new Scanner(System.in);
         int menu = 0;
 
         while (true) {
             while (true) {
+
+                String active = "";
+                if (primeDay) {
+                    active = "Deactivate ";
+                } else {
+                    active = "Activate ";
+                }
+
                 System.out.println("==========Options==========\n" +
                         "1) Add Package\n" +
                         "2) Add Vehicle\n" +
-                        "3) Activate Prime Day\n" +
+                        "3) " + active + "Prime Day\n" +
                         "4) Send Vehicle\n" +
                         "5) Print Statistics\n" +
                         "6) Exit\n" +
