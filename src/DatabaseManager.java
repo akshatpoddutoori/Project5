@@ -73,10 +73,10 @@ public class DatabaseManager {
      * @param file CSV File
      * @return ArrayList of packages
      */
-    //123ABC,Echo dot,30.0,49.99,Nathan Cohen,3203 Thousand Oaks Drive,Louisville,KY,40205
-    //213,OP,10.0,230.0,John,3203,LV,KY,40205
-    //QWE,IL,5.0,20.03,Harry,3201,UP,ER,40208
-    //123ABC,Echo Dot,5.7,49.99,Lawson Computer Science Building,305 N University St,West Lafayette,IN,47907
+//    123ABC,Echo dot,30.0,49.99,Nathan Cohen,3203 Thousand Oaks Drive,Louisville,KY,40205
+//    213,OP,10.0,230.0,John,3203,LV,KY,40205
+//    QWE,IL,5.0,20.03,Harry,3201,UP,ER,40208
+//    123ABC,Echo Dot,5.7,49.99,Lawson Computer Science Building,305 N University St,West Lafayette,IN,47907
     public static ArrayList<Package> loadPackages(File file) {
 
         ArrayList<Package> output = new ArrayList<>();
@@ -223,11 +223,14 @@ public class DatabaseManager {
      */
     public static void saveVehicles(File file, ArrayList<Vehicle> vehicles) {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            StringBuilder sb = new StringBuilder();
             for (Vehicle vehicle: vehicles) {
-                bw.write(vehicle.getType() + "," + vehicle.getLicensePlate() + "," +
+                sb.append(vehicle.getType() + "," + vehicle.getLicensePlate() + "," +
                         vehicle.getMaxWeight());
             }
+            bw.write(sb.toString());
+            bw.close();
         } catch (IOException e) {
             System.out.println("An IOException occurred. I will now print the stack trace so "
                     + "I get more information on what caused this exception:");
@@ -258,12 +261,15 @@ public class DatabaseManager {
      */
     public static void savePackages(File file, ArrayList<Package> packages) {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
-            for (Package currentPackage: packages) {
-                bw.write(currentPackage.getID() + "," + currentPackage.getProduct() + "," +
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            StringBuilder sb = new StringBuilder();
+            for (Package currentPackage : packages) {
+                sb.append(currentPackage.getID() + "," + currentPackage.getProduct() + "," +
                         currentPackage.getWeight() + "," + currentPackage.getPrice() + "," +
-                        currentPackage.getDestination().betterToString());
+                        currentPackage.getDestination().betterToString() + "\n");
             }
+            bw.write(sb.toString());
+            bw.close();
         } catch (IOException e) {
             System.out.println("An IOException occurred. I will now print the stack trace so "
                     + "I get more information on what caused this exception:");

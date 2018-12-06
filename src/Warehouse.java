@@ -1,4 +1,4 @@
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,12 +9,16 @@ import java.util.Scanner;
 public class Warehouse {
 	final static String folderPath = "files/";
 //    final static File VEHICLE_FILE = new File(folderPath + "VehicleList.csv");
-    final static File VEHICLE_FILE = new File("/Users/Linnea/Desktop/untitled/src/files/VehicleList.csv");
-    //    final static File PACKAGE_FILE = new File(folderPath + "PackageList.csv");
-    final static File PACKAGE_FILE = new File("/Users/Linnea/Desktop/untitled/src/files/PackageList.csv");
-    final static File PROFIT_FILE = new File(folderPath + "Profit.txt");
-    final static File N_PACKAGES_FILE = new File(folderPath + "NumberOfPackages.txt");
-    final static File PRIME_DAY_FILE = new File(folderPath + "PrimeDay.txt");
+    final static File VEHICLE_FILE = new File("/Users/Linnea/Desktop/Project5/src/files/VehicleList.csv");
+//    final static File PACKAGE_FILE = new File(folderPath + "PackageList.csv");
+    final static File PACKAGE_FILE = new File("/Users/Linnea/Desktop/Project5/src/files/PackageList.csv");
+//    final static File PROFIT_FILE = new File(folderPath + "Profit.txt");
+    final static File PROFIT_FILE = new File("/Users/Linnea/Desktop/Project5/src/files/Profit.txt");
+//    final static File N_PACKAGES_FILE = new File(folderPath + "NumberOfPackages.txt");
+    final static File N_PACKAGES_FILE = new File("/Users/Linnea/Desktop/Project5/src/files/NumberOfPackages.txt");
+//    final static File PRIME_DAY_FILE = new File(folderPath + "PrimeDay.txt");
+    final static File PRIME_DAY_FILE = new File("/Users/Linnea/Desktop/Project5/src/files/PrimeDay.txt");
+
     final static double PRIME_DAY_DISCOUNT = .15;
 
     /**
@@ -31,7 +35,8 @@ public class Warehouse {
         double profit = DatabaseManager.loadProfit(PROFIT_FILE);
         int numPackages = DatabaseManager.loadPackagesShipped(N_PACKAGES_FILE);
         boolean primeDay = DatabaseManager.loadPrimeDay(PRIME_DAY_FILE);
-    	
+
+
     	
     	//2) Show menu and handle user inputs
         Scanner scan = new Scanner(System.in);
@@ -97,6 +102,7 @@ public class Warehouse {
                 packages.add(packageToBeAdded);
 
                 DatabaseManager.savePackages(PACKAGE_FILE, packages);
+                numPackages++;
 
             } else if (menu == 2) {
                 System.out.println("Vehicle Options:\n" +

@@ -38,7 +38,6 @@ public class CargoPlane extends Vehicle {
      */
     @Override
     public void fill(ArrayList<Package> warehousePackages) {
-    	//TODO
         int difference = 0;
         int counter = 0;
 
@@ -106,7 +105,6 @@ public class CargoPlane extends Vehicle {
         return output;
     }
 
-    // TODO this is new
     //method that is used in DatabaseManager in the saveVehicles() method
     public String getType() {
         return "Cargo Plane";
