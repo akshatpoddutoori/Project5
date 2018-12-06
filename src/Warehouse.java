@@ -7,17 +7,15 @@ import java.util.Scanner;
  */
 
 public class Warehouse {
-	final static String folderPath = "files/";
-//    final static File VEHICLE_FILE = new File(folderPath + "VehicleList.csv");
-    final static File VEHICLE_FILE = new File("/Users/Akshat/Desktop/JAVA/Project5/src/files/VehicleList.csv");
-//    final static File PACKAGE_FILE = new File(folderPath + "PackageList.csv");
-    final static File PACKAGE_FILE = new File("/Users/Akshat/Desktop/JAVA/Project5/src/files/PackageList.csv");
-//    final static File PROFIT_FILE = new File(folderPath + "Profit.txt");
-    final static File PROFIT_FILE = new File("/Users/Akshat/Desktop/JAVA/Project5/src/files/Profit.txt");
-//    final static File N_PACKAGES_FILE = new File(folderPath + "NumberOfPackages.txt");
-    final static File N_PACKAGES_FILE = new File("/Users/Akshat/Desktop/JAVA/Project5/src/files/NumberOfPackages.txt");
-//    final static File PRIME_DAY_FILE = new File(folderPath + "PrimeDay.txt");
-    final static File PRIME_DAY_FILE = new File("/Users/Akshat/Desktop/JAVA/Project5/src/files/PrimeDay.txt");
+	//final static String folderPath = "files/";        //Vocareum's filepath
+    //final static String folderPath = "files/";        //Linnea's filepath
+    final static String folderPath = "/Users/Akshat/Desktop/JAVA/Project5/src/files/";  //Akshat's filepath
+
+    final static File VEHICLE_FILE = new File(folderPath + "VehicleList.csv");
+    final static File PACKAGE_FILE = new File(folderPath + "PackageList.csv");
+    final static File PROFIT_FILE = new File(folderPath + "Profit.txt");
+    final static File N_PACKAGES_FILE = new File(folderPath + "NumberOfPackages.txt");
+    final static File PRIME_DAY_FILE = new File(folderPath + "PrimeDay.txt");
 
     final static double PRIME_DAY_DISCOUNT = .15;
 
@@ -59,7 +57,8 @@ public class Warehouse {
                         "6) Exit\n" +
                         "===========================");
                 try {
-                    menu = scan.nextInt();
+                    String number = scan.nextLine();
+                    menu = Integer.parseInt(number);
                     if (menu > 0 && menu < 7) {
                         break;
                     } else {
@@ -153,14 +152,22 @@ public class Warehouse {
                     }
                 }
             } else if (menu == 3) {
-                for (Package currentPackage: packages) {
-                    currentPackage.setPrice((currentPackage.getPrice() * 0.85));
+                if (!primeDay) {
+                    for (Package currentPackage : packages) {
+                        currentPackage.setPrice((currentPackage.getPrice() * 0.85));
+                    }
+                } else if (primeDay) {
+                    for (Package currentPackage : packages) {
+                        currentPackage.setPrice((currentPackage.getPrice() / 0.85));
+                    }
                 }
                 if (primeDay) {
                     primeDay = false;
                 } else {
                     primeDay = true;
                 }
+
+                DatabaseManager.savePrimeDay(PRIME_DAY_FILE, primeDay);
 
             } else if (menu == 4) {
 
@@ -172,6 +179,9 @@ public class Warehouse {
                         + (DatabaseManager.loadPackages(PACKAGE_FILE)).size() + "\n" +
                         "==============================");
             } else if (menu == 6) {
+                for (Package currentPackage : packages) {
+                    System.out.println(currentPackage.getPrice());
+                }
                 break;
             }
         }

@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
 /**
@@ -289,7 +290,8 @@ public class DatabaseManager {
 
     public static void saveProfit(File file, double profit) {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write("");
             bw.write("" + profit);
         } catch (IOException e) {
             System.out.println("An IOException occurred. I will now print the stack trace so "
