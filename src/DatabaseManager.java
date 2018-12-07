@@ -337,12 +337,17 @@ public class DatabaseManager {
 
     public static void savePrimeDay(File file, boolean primeDay) {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            StringBuilder sb = new StringBuilder();
+
             if (primeDay) {
-                bw.write("1");
+                sb.append("1");
             } else {
-                bw.write("0");
+                sb.append("0");
             }
+
+            bw.write(sb.toString());
+            bw.close();
         } catch (IOException e) {
             System.out.println("An IOException occurred. I will now print the stack trace so "
                     + "I get more information on what caused this exception:");

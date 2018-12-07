@@ -7,6 +7,7 @@ import java.util.Scanner;
  */
 
 public class Warehouse {
+
 	//final static String folderPath = "files/";        //Vocareum's filepath
     //final static String folderPath = "files/";        //Linnea's filepath
     final static String folderPath = "/Users/Akshat/Desktop/JAVA/Project5/src/files/";  //Akshat's filepath
@@ -25,8 +26,6 @@ public class Warehouse {
      * @param args list of command line arguements
      */
     public static void main(String[] args) {
-    	//TODO
-    	
     	//1) load data (vehicle, packages, profits, packages shipped and primeday) from files using DatabaseManager
         ArrayList<Vehicle> vehicles = DatabaseManager.loadVehicles(VEHICLE_FILE);
         ArrayList<Package> packages = DatabaseManager.loadPackages(PACKAGE_FILE);
@@ -36,12 +35,12 @@ public class Warehouse {
 
     	//2) Show menu and handle user inputs
         Scanner scan = new Scanner(System.in);
-        int menu = 0;
+        int menu;
 
         while (true) {
             while (true) {
 
-                String active = "";
+                String active;
                 if (primeDay) {
                     active = "Deactivate ";
                 } else {
@@ -57,8 +56,9 @@ public class Warehouse {
                         "6) Exit\n" +
                         "===========================");
                 try {
-                    String number = scan.nextLine();
-                    menu = Integer.parseInt(number);
+                    String num = scan.next();
+                    menu = Integer.parseInt(num);
+
                     if (menu > 0 && menu < 7) {
                         break;
                     } else {
@@ -166,10 +166,108 @@ public class Warehouse {
                 } else {
                     primeDay = true;
                 }
-
                 DatabaseManager.savePrimeDay(PRIME_DAY_FILE, primeDay);
+                DatabaseManager.savePackages(PACKAGE_FILE, packages);
 
             } else if (menu == 4) {
+                if (vehicles.size() == 0)
+                    System.out.println("Error: No vehicles available.");
+                else if (packages.size() == 0)
+                    System.out.println("Error: No packages available.");
+                else {
+                    int vehicleOption;
+                    boolean sendPackages = false;
+                    while (!sendPackages) {
+                        try {
+                            System.out.println("Options:\n" +
+                                    "1) Send Truck\n" +
+                                    "2) Send Drone\n" +
+                                    "3) Send Cargo Plane\n" +
+                                    "4) Send First Available");
+                            String num = scan.nextLine();
+                            vehicleOption = Integer.parseInt(num);
+                            if (vehicleOption < 1 || vehicleOption > 4) {
+                                continue;
+                            }
+                            boolean isTruck = false;
+                            boolean isDrone = false;
+                            boolean isPlane = false;
+                            for (Vehicle currentVehicle : vehicles) {
+                                //checks if there is a truck, drone, or cargo plane in the entire array
+                                if (currentVehicle.getType() == "Truck") {
+                                    isTruck = true;
+                                } else if (currentVehicle.getType() == "Drone") {
+                                    isDrone = true;
+                                } else if (currentVehicle.getType() == "Cargo Plane") {
+                                    isTruck = true;
+                                }
+                            }
+                            if (vehicleOption == 1) {
+                                if (!isTruck) {
+                                    System.out.println("Error: No vehicles of selected type are available.");
+                                } else {
+                                    sendPackages = true;
+                                }
+                            } else if (vehicleOption == 2) {
+                                if (!isDrone) {
+                                    System.out.println("Error: No vehicles of selected type are available.");
+                                } else {
+                                    sendPackages = true;
+                                }
+                            } else if (vehicleOption == 3) {
+                                if (!isPlane) {
+                                    System.out.println("Error: No vehicles of selected type are available.");
+                                } else {
+                                    sendPackages = true;
+                                }
+                            } else if (vehicleOption == 4) {
+                                if (!isTruck & !isDrone && !isPlane) {
+                                    System.out.println("Error: No vehicles of selected type are available.");
+                                } else {
+                                    sendPackages = true;
+                                }
+                            }
+                        } catch (Exception e) {
+                            System.out.println("That is not a valid option.");
+                        }
+                    }
+                    
+                    int zipOption;
+                    while (true) {
+                        System.out.println("ZIP Code Options:\n" +
+                                "1) Send to first ZIP Code\n" +
+                                "2) Send to mode of ZIP Codes");
+                        try {
+                            String number = scan.nextLine();
+                            zipOption = Integer.parseInt(number);
+                            ArrayList<Integer> indexes = new ArrayList<Integer>();
+                            indexes.add(new Integer(((packages.get(0)).getDestination()).getZipCode()));
+                            if (zipOption == 1) {
+                                int destination = ((packages.get(0)).getDestination()).getZipCode();
+                                for (int x = 0; x < packages.size(); x++) {
+                                    int currentZip = ((packages.get(0)).getDestination()).getZipCode();
+                                    if (currentZip == destination) {
+                                        indexes.add(new Integer(currentZip));
+                                    }
+                                }
+
+
+                                break;
+                            } else if (zipOption == 2) {
+
+
+
+                                break;
+                            }
+                            System.out.println("That is not a valid option.");
+                        } catch (Exception e) {
+                            System.out.println("That is not a valid option.");
+                        }
+                    }
+                    break;
+
+
+                }
 
             } else if (menu == 5) { //TODO won't always lineup properly
                 System.out.println("==========Statistics==========\n" +
