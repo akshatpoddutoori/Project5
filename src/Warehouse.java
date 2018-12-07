@@ -175,6 +175,7 @@ public class Warehouse {
                 else if (packages.size() == 0)
                     System.out.println("Error: No packages available.");
                 else {
+                    String type;
                     int vehicleOption;
                     boolean sendPackages = false;
                     while (!sendPackages) {
@@ -207,24 +208,28 @@ public class Warehouse {
                                     System.out.println("Error: No vehicles of selected type are available.");
                                 } else {
                                     sendPackages = true;
+                                    type = "Truck";
                                 }
                             } else if (vehicleOption == 2) {
                                 if (!isDrone) {
                                     System.out.println("Error: No vehicles of selected type are available.");
                                 } else {
                                     sendPackages = true;
+                                    type = "Drone";
                                 }
                             } else if (vehicleOption == 3) {
                                 if (!isPlane) {
                                     System.out.println("Error: No vehicles of selected type are available.");
                                 } else {
                                     sendPackages = true;
+                                    type = "Cargo Plane";
                                 }
                             } else if (vehicleOption == 4) {
                                 if (!isTruck & !isDrone && !isPlane) {
                                     System.out.println("Error: No vehicles of selected type are available.");
                                 } else {
                                     sendPackages = true;
+                                    type = vehicles.get(0).getType();
                                 }
                             }
                         } catch (Exception e) {
@@ -241,16 +246,30 @@ public class Warehouse {
                             String number = scan.nextLine();
                             zipOption = Integer.parseInt(number);
                             ArrayList<Integer> indexes = new ArrayList<Integer>();
-                            indexes.add(new Integer(((packages.get(0)).getDestination()).getZipCode()));
+                            ArrayList<Package> packagesToSend = new ArrayList<Package>();
+                            double moneyEarned = 0;
+                            int numPackagesSent = 0;
+
                             if (zipOption == 1) {
                                 int destination = ((packages.get(0)).getDestination()).getZipCode();
+                                indexes.add(destination);
+
                                 for (int x = 0; x < packages.size(); x++) {
                                     int currentZip = ((packages.get(0)).getDestination()).getZipCode();
                                     if (currentZip == destination) {
-                                        indexes.add(new Integer(currentZip));
+                                        indexes.add(currentZip);
                                     }
                                 }
 
+
+                                for (Integer index: indexes) {
+                                    packagesToSend.add(packages.get(index));
+                                    moneyEarned += (packages.get(index)).getPrice();
+                                    numPackagesSent++;
+                                }
+
+                                DatabaseManager.savePackagesShipped(PACKAGE_FILE, numPackages);
+                                DatabaseManager.saveProfit(PROFIT_FILE, profit);
 
                                 break;
                             } else if (zipOption == 2) {

@@ -289,10 +289,15 @@ public class DatabaseManager {
      */
 
     public static void saveProfit(File file, double profit) {
+        double before = loadProfit(file);
+
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            bw.write("");
-            bw.write("" + profit);
+            StringBuilder sb = new StringBuilder();
+
+            sb.append(before + profit);
+            bw.write(sb.toString());
+            bw.close();
         } catch (IOException e) {
             System.out.println("An IOException occurred. I will now print the stack trace so "
                     + "I get more information on what caused this exception:");
@@ -312,9 +317,15 @@ public class DatabaseManager {
      */
 
     public static void savePackagesShipped(File file, int nPackages) {
+        int before = loadPackagesShipped(file);
+
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
-            bw.write("" + nPackages);
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            StringBuilder sb = new StringBuilder();
+
+            sb.append(before + nPackages);
+            bw.write(sb.toString());
+            bw.close();
         } catch (IOException e) {
             System.out.println("An IOException occurred. I will now print the stack trace so "
                     + "I get more information on what caused this exception:");
