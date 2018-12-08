@@ -185,7 +185,7 @@ public class Warehouse {
                                     "2) Send Drone\n" +
                                     "3) Send Cargo Plane\n" +
                                     "4) Send First Available");
-                            String num = scan.nextLine();
+                            String num = scan.next();
                             vehicleOption = Integer.parseInt(num);
                             if (vehicleOption < 1 || vehicleOption > 4) {
                                 continue;
@@ -195,12 +195,12 @@ public class Warehouse {
                             boolean isPlane = false;
                             for (Vehicle currentVehicle : vehicles) {
                                 //checks if there is a truck, drone, or cargo plane in the entire array
-                                if (currentVehicle.getType() == "Truck") {
+                                if (currentVehicle.getType().equals("Truck")) {
                                     isTruck = true;
-                                } else if (currentVehicle.getType() == "Drone") {
+                                } else if (currentVehicle.getType().equals("Drone")) {
                                     isDrone = true;
-                                } else if (currentVehicle.getType() == "Cargo Plane") {
-                                    isTruck = true;
+                                } else if (currentVehicle.getType().equals("Cargo Plane")) {
+                                    isPlane = true;
                                 }
                             }
                             if (vehicleOption == 1) {
@@ -238,12 +238,12 @@ public class Warehouse {
                     }
                     
                     int zipOption;
-                    while (true) {
+                    while (sendPackages) {
                         System.out.println("ZIP Code Options:\n" +
                                 "1) Send to first ZIP Code\n" +
                                 "2) Send to mode of ZIP Codes");
                         try {
-                            String number = scan.nextLine();
+                            String number = scan.next();
                             zipOption = Integer.parseInt(number);
                             ArrayList<Integer> indexes = new ArrayList<Integer>();
                             ArrayList<Package> packagesToSend = new ArrayList<Package>();
@@ -252,12 +252,12 @@ public class Warehouse {
 
                             if (zipOption == 1) {
                                 int destination = ((packages.get(0)).getDestination()).getZipCode();
-                                indexes.add(destination);
+                                indexes.add(0);
 
-                                for (int x = 0; x < packages.size(); x++) {
-                                    int currentZip = ((packages.get(0)).getDestination()).getZipCode();
+                                for (int x = 1; x < packages.size(); x++) {
+                                    int currentZip = ((packages.get(x)).getDestination()).getZipCode();
                                     if (currentZip == destination) {
-                                        indexes.add(currentZip);
+                                        indexes.add(x);
                                     }
                                 }
 
