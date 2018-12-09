@@ -3,7 +3,7 @@
  *p
  * Is a class that sets up ShippingAddress objects to be used for Package objects
  *
- * @author Akshat Poddutoori, CS180 Black
+ * @author Akshat Poddutoori, Linnea Lindstrom, CS180 Black
  *
  * @version December 9, 2018
  *

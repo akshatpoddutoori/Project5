@@ -1,9 +1,11 @@
+import java.text.DecimalFormat;
+
 /**
  * Project 5 - Package
- *p
+ *
  * Is a class that sets up Package objects
  *
- * @author Akshat Poddutoori, CS180 Black
+ * @author Akshat Poddutoori, Linnea Lindstrom, CS180 Black
  *
  * @version December 9, 2018
  *
@@ -126,13 +128,23 @@ public class Package {
      * @return The package's shipping label.
      */
     public String shippingLabel() {
+        DecimalFormat formatter = new DecimalFormat("#0.00");
+        DecimalFormat usd = new DecimalFormat("#,###.00");
+
         return "====================\n" +
                 "TO: " + getDestination().toString() + "\n" +
-                "Weight:         " + getWeight() + "\n" +
-                "Price:        $" + getPrice() + "\n" +
+                "Weight:" + String.format("%13s", formatter.format(getWeight())) + "\n" +
+                "Price: " + String.format("%13s", "$" + usd.format(getPrice())) + "\n" +
                 "Product:" + getProduct() + "\n" +
                 "====================";
 
+
+//        return "====================\n" +
+//                "TO: " + getDestination().toString() + "\n" +
+//                "Weight:         " + getWeight() + "\n" +
+//                "Price:        $" + getPrice() + "\n" +
+//                "Product:" + getProduct() + "\n" +
+//                "====================";
 
     }
 

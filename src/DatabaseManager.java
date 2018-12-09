@@ -7,7 +7,7 @@ import java.util.ArrayList;
  *
  * Is a class that sets all of the methods that interact with the files
  *
- * @author Akshat Poddutoori, CS180 Black
+ * @author Akshat Poddutoori, Linnea Lindstrom, CS180 Black
  *
  * @version December 9, 2018
  *
@@ -24,7 +24,7 @@ public class DatabaseManager {
      * <li>Maximum Carry Weight</li>
      * </ol>
      * If filePath does not exist, a blank ArrayList will be returned.
-     * 
+     *
      * @param file CSV File
      * @return ArrayList of vehicles
      */
@@ -34,7 +34,9 @@ public class DatabaseManager {
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
 
-            for (String line; (line = br.readLine()) != null; ) {
+//            for (String line; (line = br.readLine()) != null; ) {
+            String line = br.readLine();
+            while (line != null) {
 
                 String vehicleType = line.substring(0, line.indexOf(","));
                 String licensePlate = line.substring(line.indexOf(",") + 1, line.lastIndexOf(","));
@@ -47,6 +49,8 @@ public class DatabaseManager {
                 } else if (vehicleType.equals("Cargo Plane")) {
                     output.add(new CargoPlane(licensePlate, maxWeight));
                 }
+
+                line = br.readLine();
             }
             br.close();
         } catch (IOException e) {
@@ -56,10 +60,10 @@ public class DatabaseManager {
         return output;
     }
 
-    
-    
-    
-    
+
+
+
+
     /**
      * Creates an ArrayList of Packages from the passed CSV file. The values are in
      * the CSV file as followed:
@@ -74,9 +78,9 @@ public class DatabaseManager {
      * <li>State</li>
      * <li>ZIP Code</li>
      * </ol>
-     * 
+     *
      * If filePath does not exist, a blank ArrayList will be returned.
-     * 
+     *
      * @param file CSV File
      * @return ArrayList of packages
      */
@@ -90,7 +94,9 @@ public class DatabaseManager {
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            for (String line; (line = br.readLine()) != null; ) {
+//            for (String line; (line = br.readLine()) != null; ) {
+            String line = br.readLine();
+            while (line != null) {
 
                 int c1 = line.indexOf(',');
                 int c2 = line.indexOf(',', c1 + 1);
@@ -113,6 +119,8 @@ public class DatabaseManager {
 
                 output.add(new Package(licensePlate, productName, weight, price,
                         new ShippingAddress(addressName, address, city, state, zipCode)));
+
+                line = br.readLine();
             }
             br.close();
         } catch (IOException e) {
@@ -121,16 +129,16 @@ public class DatabaseManager {
 
         return output;
     }
-    
-    
-    
-    
-    
+
+
+
+
+
 
     /**
      * Returns the total Profits from passed text file. If the file does not exist 0
      * will be returned.
-     * 
+     *
      * @param file file where profits are stored
      * @return profits from file
      */
@@ -143,8 +151,11 @@ public class DatabaseManager {
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            for (String line; (line = br.readLine()) != null; ) {
+//            for (String line; (line = br.readLine()) != null; ) {
+            String line = br.readLine();
+            while (line != null) {
                 output = Double.parseDouble(line);
+                line = br.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -153,14 +164,14 @@ public class DatabaseManager {
         return output;
     }
 
-    
-    
-    
-    
+
+
+
+
     /**
      * Returns the total number of packages shipped stored in the text file. If the
      * file does not exist 0 will be returned.
-     * 
+     *
      * @param file file where number of packages shipped are stored
      * @return number of packages shipped from file
      */
@@ -173,8 +184,11 @@ public class DatabaseManager {
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            for (String line; (line = br.readLine()) != null; ) {
+//            for (String line; (line = br.readLine()) != null; ) {
+            String line = br.readLine();
+            while (line != null) {
                 output = Integer.parseInt(line);
+                line = br.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -183,13 +197,13 @@ public class DatabaseManager {
         return output;
     }
 
-    
-    
-    
+
+
+
     /**
      * Returns whether or not it was Prime Day in the previous session. If file does
      * not exist, returns false.
-     * 
+     *
      * @param file file where prime day is stored
      * @return whether or not it is prime day
      */
@@ -202,8 +216,11 @@ public class DatabaseManager {
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            for (String line; (line = br.readLine()) != null; ) {
+//            for (String line; (line = br.readLine()) != null; ) {
+            String line = br.readLine();
+            while (line != null) {
                 counter += Integer.parseInt(line);
+                line = br.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -212,10 +229,10 @@ public class DatabaseManager {
         return (counter > 0);
     }
 
-    
-    
-    
-    
+
+
+
+
     /**
      * Saves (writes) vehicles from ArrayList of vehicles to file in CSV format one vehicle per line.
      * Each line (vehicle) has following fields separated by comma in the same order.
@@ -224,7 +241,7 @@ public class DatabaseManager {
      * <li>Vehicle License Plate</li>
      * <li>Maximum Carry Weight</li>
      * </ol>
-     * 
+     *
      * @param file     File to write vehicles to
      * @param vehicles ArrayList of vehicles to save to file
      */
@@ -245,9 +262,9 @@ public class DatabaseManager {
         }
     }
 
-    
-    
-    
+
+
+
     /**
      * Saves (writes) packages from ArrayList of package to file in CSV format one package per line.
      * Each line (package) has following fields separated by comma in the same order.
@@ -262,7 +279,7 @@ public class DatabaseManager {
      * <li>State</li>
      * <li>ZIP Code</li>
      * </ol>
-     * 
+     *
      * @param file     File to write packages to
      * @param packages ArrayList of packages to save to file
      */
@@ -284,12 +301,12 @@ public class DatabaseManager {
         }
     }
 
-    
-    
-    
+
+
+
     /**
      * Saves profit to text file.
-     * 
+     *
      * @param file   File to write profits to
      * @param profit Total profits
      */
@@ -309,13 +326,13 @@ public class DatabaseManager {
         }
     }
 
-    
-    
-    
-    
+
+
+
+
     /**
      * Saves number of packages shipped to text file.
-     * 
+     *
      * @param file      File to write profits to
      * @param nPackages Number of packages shipped
      */
@@ -335,15 +352,15 @@ public class DatabaseManager {
         }
     }
 
-    
-    
-    
-    
-    
+
+
+
+
+
     /**
      * Saves status of prime day to text file. If it is primeDay "1" will be
      * writtern, otherwise "0" will be written.
-     * 
+     *
      * @param file     File to write profits to
      * @param primeDay Whether or not it is Prime Day
      */

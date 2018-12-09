@@ -10,7 +10,7 @@ import java.util.Scanner;
  *
  * Is a class runs the Amazon warehouse
  *
- * @author Akshat Poddutoori, CS180 Black
+ * @author Akshat Poddutoori, Linnea Lindstrom, CS180 Black
  *
  * @version December 9, 2018
  *
@@ -18,9 +18,9 @@ import java.util.Scanner;
 
 public class Warehouse {
 
-	//final static String FOLDER_PATH = "files/";        //Vocareum's filepath
-    //final static String FOLDER_PATH = "files/";        //Linnea's filepath
-    final static String FOLDER_PATH = "/Users/Akshat/Desktop/JAVA/Project5/src/files/";  //Akshat's filepath
+//	final static String FOLDER_PATH = "files/";        //Vocareum's filepath
+    final static String FOLDER_PATH = "/Users/Linnea/Desktop/Project5/src/files/";        //Linnea's filepath
+//    final static String FOLDER_PATH = "/Users/Akshat/Desktop/JAVA/Project5/src/files/";  //Akshat's filepath
 
     final static File VEHICLE_FILE = new File(FOLDER_PATH + "VehicleList.csv");
     final static File PACKAGE_FILE = new File(FOLDER_PATH + "PackageList.csv");
@@ -32,12 +32,21 @@ public class Warehouse {
 
 
     public static void printStatisticsReport(double profits, int packagesShipped, int numberOfPackages) {
+        DecimalFormat usd = new DecimalFormat("#,###.00");
+
         System.out.println("==========Statistics==========\n" +
-                "Profits:                 $" + profits + "\n" +
-                "Packages Shipped:           " + packagesShipped
-                + "\n" + "Packages in Warehouse:      "
-                + numberOfPackages + "\n" +
+                "Profits:" + String.format("%22s", "$" + usd.format(profits)) + "\n" +
+                "Packages Shipped:" + String.format("%13s", packagesShipped)
+                + "\n" + "Packages in Warehouse:"
+                + String.format("%8s", numberOfPackages) + "\n" +
                 "==============================");
+
+//        System.out.println("==========Statistics==========\n" +
+//                "Profits:                 $" + profits + "\n" +
+//                "Packages Shipped:           " + packagesShipped
+//                + "\n" + "Packages in Warehouse:      "
+//                + numberOfPackages + "\n" +
+//                "==============================");
     }
 
     /**
@@ -53,7 +62,7 @@ public class Warehouse {
         int numPackages = DatabaseManager.loadPackagesShipped(N_PACKAGES_FILE);
         boolean primeDay = DatabaseManager.loadPrimeDay(PRIME_DAY_FILE);
 
-        DecimalFormat df = new DecimalFormat("0.00");
+//        DecimalFormat df = new DecimalFormat("0.00");
 
         //2) Show menu and handle user inputs
         Scanner scan = new Scanner(System.in);
@@ -95,9 +104,10 @@ public class Warehouse {
             if (menu == 1) {
                 System.out.println("Enter Package ID:");
                 String id = scan.next();
+                scan.nextLine();
 
                 System.out.println("Enter Product Name:");
-                String product = scan.next();
+                String product = scan.nextLine();
 
                 System.out.println("Enter Weight:");
                 double weight = scan.nextDouble();
@@ -108,19 +118,20 @@ public class Warehouse {
                 scan.nextLine();
 
                 System.out.println("Enter Buyer Name:");
-                String name = scan.next();
+                String name = scan.nextLine();
 
                 System.out.println("Enter Address:");
-                String address = scan.next();
+                String address = scan.nextLine();
 
                 System.out.println("Enter City:");
-                String city = scan.next();
+                String city = scan.nextLine();
 
                 System.out.println("Enter State:");
-                String state = scan.next();
+                String state = scan.nextLine();
 
                 System.out.println("Enter ZIP Code:");
                 int zipCode = scan.nextInt();
+                scan.nextLine();
 
                 ShippingAddress shippingAddress = new ShippingAddress(name, address, city, state, zipCode);
                 Package packageToBeAdded = new Package(id, product, weight, price, shippingAddress);
@@ -358,7 +369,7 @@ public class Warehouse {
                 break;
             }
         }
-    	
+    	scan.close();
     	
 
     

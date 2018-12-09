@@ -1,12 +1,11 @@
-import java.util.ArrayList;
-
+import java.text.DecimalFormat;
 
 /**
  * Project 5 - Truck
  *p
  * Is a class that sets up Truck objects
  *
- * @author Akshat Poddutoori, CS180 Black
+ * @author Akshat Poddutoori, Linnea Lindstrom, CS180 Black
  *
  * @version December 9, 2018
  *
@@ -76,16 +75,20 @@ public class Truck extends Vehicle {
      */
     @Override
     public String report() {
+        DecimalFormat usd = new DecimalFormat("#,###.00");
+
         String output = "==========Truck Report==========\n" +
                 "License Plate No.: " + getLicensePlate() + "\n" +
                 "Destination: " + getZipDest() + "\n" +
                 "Weight Load: " + getCurrentWeight() + "/" + getMaxWeight() + "\n" +
-                "Net Profit: $" + getProfit() + "\n" +
+                "Net Profit: $" + usd.format(getProfit()) + "\n" +
                 "=====Shipping Labels=====\n";
 
         for (Package currentItem: getPackages()) {
-            output += currentItem.shippingLabel();
+            output += currentItem.shippingLabel() + "\n";
         }
+
+        output += "================================";
 
         return output;
     }
