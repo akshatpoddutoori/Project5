@@ -2,10 +2,18 @@ import java.util.ArrayList;
 
 
 /**
- * <h1>CargoPlane</h1> Represents a Cargo Plane
+ * Project 5 - CargoPlane
+ *
+ * Is a class that sets up CargoPlane objects
+ *
+ * @author Akshat Poddutoori, CS180 Black
+ *
+ * @version December 9, 2018
+ *
  */
+
 public class CargoPlane extends Vehicle {
-    final double GAS_RATE = 2.33;
+    final static double GAS_RATE = 2.33;
 
     /**
      * Default Constructor

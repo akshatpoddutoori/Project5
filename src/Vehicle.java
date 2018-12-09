@@ -1,7 +1,14 @@
 import java.util.ArrayList;
 
 /**
- * <h1>Vehicle</h1> Represents a vehicle
+ * Project 5 - Vehicle
+ *
+ * Is a class that sets up vehicle objects
+ *
+ * @author Akshat Poddutoori, CS180 Black
+ *
+ * @version December 9, 2018
+ *
  */
 
 public class Vehicle implements Profitable {
@@ -164,7 +171,7 @@ public class Vehicle implements Profitable {
     public boolean addPackage(Package pkg) {
         if ((currentWeight + pkg.getWeight()) < maxWeight) {
             packages.add(pkg);
-            currentWeight+= pkg.getWeight();
+            currentWeight += pkg.getWeight();
             return true;
         } else {
             return false;

@@ -1,12 +1,19 @@
 import java.util.ArrayList;
 
 /**
- * <h1>Drone</h1> Represents a Drone
+ * Project 5 - Drone
+ *
+ * Is a class that sets up Drone objects
+ *
+ * @author Akshat Poddutoori, CS180 Black
+ *
+ * @version December 9, 2018
+ *
  */
 
 public class Drone extends Vehicle {
 
-    final private double GAS_RATE = 1.33;
+    final static private double GAS_RATE = 1.33;
     /**
      * Default Contructor 
      */

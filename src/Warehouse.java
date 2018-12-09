@@ -3,23 +3,42 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+
 /**
- * <h1>Warehouse</h1>
+ * Project 5 - Warehouse
+ *
+ * Is a class runs the Amazon warehouse
+ *
+ * @author Akshat Poddutoori, CS180 Black
+ *
+ * @version December 9, 2018
+ *
  */
 
 public class Warehouse {
 
-	//final static String folderPath = "files/";        //Vocareum's filepath
-    //final static String folderPath = "files/";        //Linnea's filepath
-    final static String folderPath = "/Users/Akshat/Desktop/JAVA/Project5/src/files/";  //Akshat's filepath
+	//final static String FOLDER_PATH = "files/";        //Vocareum's filepath
+    //final static String FOLDER_PATH = "files/";        //Linnea's filepath
+    final static String FOLDER_PATH = "/Users/Akshat/Desktop/JAVA/Project5/src/files/";  //Akshat's filepath
 
-    final static File VEHICLE_FILE = new File(folderPath + "VehicleList.csv");
-    final static File PACKAGE_FILE = new File(folderPath + "PackageList.csv");
-    final static File PROFIT_FILE = new File(folderPath + "Profit.txt");
-    final static File N_PACKAGES_FILE = new File(folderPath + "NumberOfPackages.txt");
-    final static File PRIME_DAY_FILE = new File(folderPath + "PrimeDay.txt");
+    final static File VEHICLE_FILE = new File(FOLDER_PATH + "VehicleList.csv");
+    final static File PACKAGE_FILE = new File(FOLDER_PATH + "PackageList.csv");
+    final static File PROFIT_FILE = new File(FOLDER_PATH + "Profit.txt");
+    final static File N_PACKAGES_FILE = new File(FOLDER_PATH + "NumberOfPackages.txt");
+    final static File PRIME_DAY_FILE = new File(FOLDER_PATH + "PrimeDay.txt");
 
     final static double PRIME_DAY_DISCOUNT = .15;
+
+
+    public static void printStatisticsReport(double profits, int packagesShipped, int numberOfPackages) {
+        System.out.println("==========Statistics==========\n" +
+                "Profits:                 $" + profits + "\n" +
+                "Packages Shipped:           " + packagesShipped
+                + "\n" + "Packages in Warehouse:      "
+                + numberOfPackages + "\n" +
+                "==============================");
+    }
 
     /**
      * Main Method
@@ -117,7 +136,7 @@ public class Warehouse {
                         "1) Truck\n" +
                         "2) Drone\n" +
                         "3) Cargo Plane");
-                while(true) {
+                while (true) {
                     int vehicleOption = scan.nextInt();
                     if (vehicleOption == 1) {
                         System.out.println("Enter License Plate No.:");
@@ -262,8 +281,8 @@ public class Warehouse {
                                 continue;
                             } else if (number == 1) {
 
-                                int ZipDestination = ((packages.get(0)).getDestination()).getZipCode();    //first ZIP
-                                vehicle.setZipDest(ZipDestination);
+                                int zipDestination = ((packages.get(0)).getDestination()).getZipCode();    //first ZIP
+                                vehicle.setZipDest(zipDestination);
 
                                 vehicle.fill(packages);
 
@@ -296,24 +315,22 @@ public class Warehouse {
 
                             if (number == 1 || number == 2) {
 
-
-                                for (Package currentPackage : vehicle.getPackages()) {
-                                    profit += currentPackage.getPrice();
-                                    numPackages++;
-                                }
+                                profit += vehicle.getProfit();
+                                numPackages += vehicle.getPackages().size();
 
 
                                 for (Package currentPackage : vehicle.getPackages()) {
                                     packages.remove(currentPackage);
                                 }
 
-                                vehicles.remove(vehicle);
-
-                                profit = (Math.round(profit*100))/100.0;
+                                profit = (Math.round(profit * 100)) / 100.0;
 
                                 DatabaseManager.savePackagesShipped(N_PACKAGES_FILE, numPackages);
                                 DatabaseManager.saveProfit(PROFIT_FILE, profit);
                                 DatabaseManager.savePackages(PACKAGE_FILE, packages);
+
+                                System.out.println(vehicle.report());
+                                vehicles.remove(vehicle);
                                 DatabaseManager.saveVehicles(VEHICLE_FILE, vehicles);
 
                             }
@@ -324,13 +341,12 @@ public class Warehouse {
 
                 }
 
-            } else if (menu == 5) { //TODO won't always lineup properly
-                System.out.println("==========Statistics==========\n" +
-                        "Profits:                 $" + DatabaseManager.loadProfit(PROFIT_FILE   ) + "\n" +
-                        "Packages Shipped:           " + DatabaseManager.loadPackagesShipped(N_PACKAGES_FILE)
-                        + "\n" + "Packages in Warehouse:      "
-                        + (DatabaseManager.loadPackages(PACKAGE_FILE)).size() + "\n" +
-                        "==============================");
+            } else if (menu == 5) {
+
+                Warehouse.printStatisticsReport(DatabaseManager.loadProfit(PROFIT_FILE),
+                        DatabaseManager.loadPackagesShipped(N_PACKAGES_FILE),
+                        (DatabaseManager.loadPackages(PACKAGE_FILE)).size());
+
             } else if (menu == 6) {
 
                 DatabaseManager.savePackagesShipped(N_PACKAGES_FILE, numPackages);
@@ -344,8 +360,7 @@ public class Warehouse {
         }
     	
     	
-    	//3) save data (vehicle, packages, profits, packages shipped and primeday) to files (overwriting them) using DatabaseManager
-    	
+
     
     }
 

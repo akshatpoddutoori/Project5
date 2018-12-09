@@ -1,6 +1,14 @@
 /**
- * <h1>Shipping Address</h1> Represents a shipping address
+ * Project 5 - ShippingAddress
+ *p
+ * Is a class that sets up ShippingAddress objects to be used for Package objects
+ *
+ * @author Akshat Poddutoori, CS180 Black
+ *
+ * @version December 9, 2018
+ *
  */
+
 public class ShippingAddress {
 
     private String name;

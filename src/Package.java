@@ -1,6 +1,14 @@
 /**
- * <h1>Package</h1> Represents a package
+ * Project 5 - Package
+ *p
+ * Is a class that sets up Package objects
+ *
+ * @author Akshat Poddutoori, CS180 Black
+ *
+ * @version December 9, 2018
+ *
  */
+
 public class Package {
     private String id;
     private String product;

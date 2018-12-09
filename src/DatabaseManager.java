@@ -3,10 +3,16 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
 /**
- * <h1>Database Manager</h1>
- * 
- * Used to locally save and retrieve data.
+ * Project 5 - DatabaseManager
+ *
+ * Is a class that sets all of the methods that interact with the files
+ *
+ * @author Akshat Poddutoori, CS180 Black
+ *
+ * @version December 9, 2018
+ *
  */
+
 public class DatabaseManager {
 
     /**
@@ -289,13 +295,11 @@ public class DatabaseManager {
      */
 
     public static void saveProfit(File file, double profit) {
-        double before = loadProfit(file);
-
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             StringBuilder sb = new StringBuilder();
 
-            sb.append(before + profit);
+            sb.append(profit);
             bw.write(sb.toString());
             bw.close();
         } catch (IOException e) {
@@ -317,13 +321,11 @@ public class DatabaseManager {
      */
 
     public static void savePackagesShipped(File file, int nPackages) {
-        int before = loadPackagesShipped(file);
-
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             StringBuilder sb = new StringBuilder();
 
-            sb.append(before + nPackages);
+            sb.append(nPackages);
             bw.write(sb.toString());
             bw.close();
         } catch (IOException e) {

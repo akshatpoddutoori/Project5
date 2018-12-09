@@ -2,11 +2,19 @@ import java.util.ArrayList;
 
 
 /**
- * <h1>Truck</h1> Represents a Truck
+ * Project 5 - Truck
+ *p
+ * Is a class that sets up Truck objects
+ *
+ * @author Akshat Poddutoori, CS180 Black
+ *
+ * @version December 9, 2018
+ *
  */
+
 public class Truck extends Vehicle {
 
-    private final double GAS_RATE = 1.66;
+    private static final double GAS_RATE = 1.66;
 
     /**
      * Default Constructor
