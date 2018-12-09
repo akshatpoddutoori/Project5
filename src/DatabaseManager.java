@@ -44,7 +44,7 @@ public class DatabaseManager {
             }
             br.close();
         } catch (IOException e) {
-            System.out.println("KOWALSKI, ANALYSIS");
+            System.out.println("KOWALSKI, ANALYSIS");   //Akshat, I'm going to remove this before we submit it tomorrow
             e.printStackTrace();
         }
         return output;

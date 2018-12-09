@@ -1,4 +1,5 @@
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -33,7 +34,9 @@ public class Warehouse {
         int numPackages = DatabaseManager.loadPackagesShipped(N_PACKAGES_FILE);
         boolean primeDay = DatabaseManager.loadPrimeDay(PRIME_DAY_FILE);
 
-    	//2) Show menu and handle user inputs
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        //2) Show menu and handle user inputs
         Scanner scan = new Scanner(System.in);
         int menu;
 
@@ -175,9 +178,11 @@ public class Warehouse {
                 else if (packages.size() == 0)
                     System.out.println("Error: No packages available.");
                 else {
-                    String type;
+                    String type = "";
                     int vehicleOption;
                     boolean sendPackages = false;
+                    Vehicle vehicle = null;
+
                     while (!sendPackages) {
                         try {
                             System.out.println("Options:\n" +
@@ -185,8 +190,7 @@ public class Warehouse {
                                     "2) Send Drone\n" +
                                     "3) Send Cargo Plane\n" +
                                     "4) Send First Available");
-                            String num = scan.next();
-                            vehicleOption = Integer.parseInt(num);
+                            vehicleOption = Integer.parseInt(scan.next());
                             if (vehicleOption < 1 || vehicleOption > 4) {
                                 continue;
                             }
@@ -236,55 +240,87 @@ public class Warehouse {
                             System.out.println("That is not a valid option.");
                         }
                     }
+
+                    for (Vehicle currentVehicle: vehicles) {        //assigns the vehicle we are going to use
+                        if (currentVehicle.getType().equals(type)) {
+                            vehicle = currentVehicle; //now we know which vehicle object has been chosen
+                            break;
+                        }
+                    }
+
                     
-                    int zipOption;
+                    int zipOption = 0;
                     while (sendPackages) {
                         System.out.println("ZIP Code Options:\n" +
                                 "1) Send to first ZIP Code\n" +
                                 "2) Send to mode of ZIP Codes");
                         try {
-                            String number = scan.next();
-                            zipOption = Integer.parseInt(number);
-                            ArrayList<Integer> indexes = new ArrayList<Integer>();
-                            ArrayList<Package> packagesToSend = new ArrayList<Package>();
-                            double moneyEarned = 0;
-                            int numPackagesSent = 0;
+                            int number = scan.nextInt();
+                            scan.nextLine();
+                            if (number != 1 && number != 2) {
+                                System.out.println("Tengo una problema");
+                                continue;
+                            } else if (number == 1) {
 
-                            if (zipOption == 1) {
-                                int destination = ((packages.get(0)).getDestination()).getZipCode();
-                                indexes.add(0);
+                                int ZipDestination = ((packages.get(0)).getDestination()).getZipCode();    //first ZIP
+                                vehicle.setZipDest(ZipDestination);
 
-                                for (int x = 1; x < packages.size(); x++) {
-                                    int currentZip = ((packages.get(x)).getDestination()).getZipCode();
-                                    if (currentZip == destination) {
-                                        indexes.add(x);
+                                vehicle.fill(packages);
+
+
+                                sendPackages = false;
+                            }  else if (number == 2) {
+
+                                int mode = packages.get(0).getDestination().getZipCode();
+                                int maxCount = 0;
+                                for (int x = 0; x < packages.size(); x++) {
+                                    int startZip = packages.get(x).getDestination().getZipCode();
+                                    int count = 0;
+                                    for (int y = 0; y < packages.size(); y++) {
+                                        if (packages.get(y).getDestination().getZipCode() == startZip)
+                                            count++;
+                                        if (count > maxCount) {
+                                            mode = startZip;
+                                            maxCount = count;
+                                        }
                                     }
                                 }
 
+                                vehicle.setZipDest(mode);
 
-                                for (Integer index: indexes) {
-                                    packagesToSend.add(packages.get(index));
-                                    moneyEarned += (packages.get(index)).getPrice();
-                                    numPackagesSent++;
+                                vehicle.fill(packages);
+
+
+                                sendPackages = false;
+                            }
+
+                            if (number == 1 || number == 2) {
+
+
+                                for (Package currentPackage : vehicle.getPackages()) {
+                                    profit += currentPackage.getPrice();
+                                    numPackages++;
                                 }
 
-                                DatabaseManager.savePackagesShipped(PACKAGE_FILE, numPackages);
+
+                                for (Package currentPackage : vehicle.getPackages()) {
+                                    packages.remove(currentPackage);
+                                }
+
+                                vehicles.remove(vehicle);
+
+                                profit = (Math.round(profit*100))/100.0;
+
+                                DatabaseManager.savePackagesShipped(N_PACKAGES_FILE, numPackages);
                                 DatabaseManager.saveProfit(PROFIT_FILE, profit);
+                                DatabaseManager.savePackages(PACKAGE_FILE, packages);
+                                DatabaseManager.saveVehicles(VEHICLE_FILE, vehicles);
 
-                                break;
-                            } else if (zipOption == 2) {
-
-
-
-                                break;
                             }
-                            System.out.println("That is not a valid option.");
                         } catch (Exception e) {
-                            System.out.println("That is not a valid option.");
+                            e.printStackTrace();
                         }
                     }
-                    break;
-
 
                 }
 
@@ -296,9 +332,13 @@ public class Warehouse {
                         + (DatabaseManager.loadPackages(PACKAGE_FILE)).size() + "\n" +
                         "==============================");
             } else if (menu == 6) {
-                for (Package currentPackage : packages) {
-                    System.out.println(currentPackage.getPrice());
-                }
+
+                DatabaseManager.savePackagesShipped(N_PACKAGES_FILE, numPackages);
+                DatabaseManager.saveProfit(PROFIT_FILE, profit);
+                DatabaseManager.savePackages(PACKAGE_FILE, packages);
+                DatabaseManager.saveVehicles(VEHICLE_FILE, vehicles);
+                DatabaseManager.savePrimeDay(PRIME_DAY_FILE, primeDay);
+
                 break;
             }
         }
